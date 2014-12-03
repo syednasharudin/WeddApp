@@ -20,6 +20,7 @@ public class HomeActivity extends Activity
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
+     * Test
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
