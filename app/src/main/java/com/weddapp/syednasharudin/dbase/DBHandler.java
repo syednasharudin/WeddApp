@@ -15,6 +15,7 @@ public class DBHandler extends SQLiteOpenHelper{
     /* user table */
     public static final String USER = "user";
     public static final String USER_ID = "user_id";
+    public static final String USER_SERVER_ID = "user_server_id";
     public static final String USER_EMAIL = "user_email";
     public static final String USER_NAME = "user_name";
     public static final String USER_PASSWORD = "user_password";
@@ -22,6 +23,7 @@ public class DBHandler extends SQLiteOpenHelper{
     public static final String DATABASE_CREATE_USER_TABLE = "create table "
             + USER + "("
             + USER_ID + " integer primary key, "
+            + USER_SERVER_ID + " integer not null, "
             + USER_EMAIL + " text not null, "
             + USER_NAME + " text not null, "
             + USER_PASSWORD + " text not null, "

@@ -16,8 +16,8 @@ public class UserDao {
 
     private SQLiteDatabase sqLiteDatabase;
     private DBHandler dbHandler;
-    private String[] allColumns = { dbHandler.USER_ID, dbHandler.USER_EMAIL, dbHandler.USER_NAME,
-                                    dbHandler.USER_PASSWORD, dbHandler.USER_API_KEY };
+    private String[] allColumns = { dbHandler.USER_ID, dbHandler.USER_SERVER_ID, dbHandler.USER_EMAIL,
+                                    dbHandler.USER_NAME, dbHandler.USER_PASSWORD, dbHandler.USER_API_KEY };
 
     public UserDao(Context context){
         dbHandler = new DBHandler(context);
@@ -34,6 +34,7 @@ public class UserDao {
     public User createUser(User user){
         ContentValues values = new ContentValues();
         values.put(dbHandler.USER_ID, user.getId());
+        values.put(dbHandler.USER_SERVER_ID, user.getServerId());
         values.put(dbHandler.USER_EMAIL, user.getEmail());
         values.put(dbHandler.USER_NAME, user.getName());
         values.put(dbHandler.USER_PASSWORD, user.getPassword());
@@ -56,7 +57,7 @@ public class UserDao {
                 + " = " + id, null);
     }
 
-    public List<User> getAllBmies() {
+    public List<User> getAllUser() {
         List<User> users = new ArrayList<User>();
 
         Cursor cursor = sqLiteDatabase.query(dbHandler.USER,
@@ -73,7 +74,7 @@ public class UserDao {
         return users;
     }
 
-    public User getBmi(int id){
+    public User getUser(int id){
         Cursor cursor =  sqLiteDatabase.query(dbHandler.USER, allColumns ,
                 dbHandler.USER_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
@@ -94,10 +95,11 @@ public class UserDao {
 
         User user = new User();
         user.setId(cursor.getInt(0));
-        user.setEmail(cursor.getString(1));
-        user.setName(cursor.getString(2));
-        user.setPassword(cursor.getString(3));
-        user.setApiKey(cursor.getString(4));
+        user.setServerId(cursor.getInt(1));
+        user.setEmail(cursor.getString(2));
+        user.setName(cursor.getString(3));
+        user.setPassword(cursor.getString(4));
+        user.setApiKey(cursor.getString(5));
 
         return user;
     }

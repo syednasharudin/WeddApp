@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -79,6 +80,7 @@ public class SignInActivity extends Activity implements ConnectionCallbacks, OnC
 
             //super.onStop();
             userDao.close();
+
             directToHomeIntent();
 
         }else {
@@ -238,7 +240,6 @@ public class SignInActivity extends Activity implements ConnectionCallbacks, OnC
                 user.setEmail(Plus.AccountApi.getAccountName(mGoogleApiClient));
                 user.setName(currentPerson.getDisplayName());
 
-
             } else {
                 Toast.makeText(getApplicationContext(),
                         "WeddApp unable to retrieve your google plus information.", Toast.LENGTH_LONG).show();
@@ -253,6 +254,7 @@ public class SignInActivity extends Activity implements ConnectionCallbacks, OnC
 
     public void directToHomeIntent(){
         Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+        i.putExtra("firstTime", true);
         startActivity(i);
         this.finish();
     }
@@ -295,9 +297,9 @@ public class SignInActivity extends Activity implements ConnectionCallbacks, OnC
                 message = jsonObject.getString("message");
 
                 if(!error) {
-                    user.setId(jsonObject.getInt("id"));
+                    user.setServerId(jsonObject.getInt("id"));
                     user.setApiKey(jsonObject.getString("apiKey"));
-                    user.setPassword("test");
+                    user.setPassword("abc123");
                 }
 
             } catch (JSONException e) {
@@ -320,6 +322,9 @@ public class SignInActivity extends Activity implements ConnectionCallbacks, OnC
                         })
                         .show();
             }else {
+
+                user.setId(0);
+
                 UserDao userDao = new UserDao(SignInActivity.this);
                 userDao.open();
                 userDao.createUser(user);

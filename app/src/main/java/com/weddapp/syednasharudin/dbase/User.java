@@ -6,6 +6,7 @@ package com.weddapp.syednasharudin.dbase;
 public class User {
 
     private int id;
+    private int serverId;
     private String email;
     private String name;
     private String password;
@@ -49,5 +50,13 @@ public class User {
 
     public void setApiKey(String apiKey) {
         this.apiKey = apiKey;
+    }
+
+    public int getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(int serverId) {
+        this.serverId = serverId;
     }
 }
